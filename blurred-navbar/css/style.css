@@ -1,0 +1,16 @@
+body {
+  background-image: url(https://www.teahub.io/photos/full/94-947874_long-dark-desktop-backgrounds.jpg);
+  height: 1000em;
+}
+
+nav {
+  -webkit-backdrop-filter: brightness(30%) blur(10px);
+          backdrop-filter: brightness(30%) blur(10px);
+}
+
+.navbar-toggler {
+  border: 0px !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,13 @@
+body {
+    background-image: url(https://www.teahub.io/photos/full/94-947874_long-dark-desktop-backgrounds.jpg);
+    height: 1000em;
+}
+
+nav {
+    backdrop-filter: brightness(30%) blur(10px)
+}
+
+.navbar-toggler {
+    border: 0px !important;
+    box-shadow: none !important;
+}
