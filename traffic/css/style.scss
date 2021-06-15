@@ -1,0 +1,20 @@
+#base {
+    border: 1px solid black;
+    border-radius: 3vw;
+    width: 25vw;
+    
+    div {
+        height: 20vw;
+        width: 20vw;
+        border-radius: 20vh;
+        border: 1px solid black;
+        margin: auto;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+        background-color: gray;
+    }
+}
+
+.center {
+    margin: auto;
+}

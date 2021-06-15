@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <title>Here map API</title>
+  <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+  <script type="text/javascript" src='../test-credentials.js'></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+  <style type="text/css">
+    h1{
+      color: white;
+      font-family: verdana;
+      font-size: 60px;
+    }
+    #name{
+      -ms-transform: translateX(-50%);
+      transform: translateX(-50%);
+      margin: 0;
+      left: 50%;
+      top: 0;
+      position: absolute;
+    }
+    body{
+      background-color: #434343;
+      margin: 0;
+      padding: 0;
+    }
+    #map{
+      width: 100%;
+      filter: invert(100%) grayscale(100%);
+      height: 82%;
+      margin: 0;
+      top: 18%;
+      position: absolute;
+    }
+  </style>
+</head>
+<body id="markers-on-the-map">
+  <div id="name"><h1>Budapest</h1></div>
+  <div id="map"></div>
+</body>
+</html>
+
+
+
+<script type="text/javascript">
+  // WRITE YOUR API KEY FROM HERE -------------------------------------
+  var apikeyFromHere = '9qKbQF1Iz0Ot52kYL6S8I3pNQV8iLlXL5S3XKwM9hDw';
+  var latitude = 48.497913;
+  var longitude = 19.040236;
+// ------------------------------------------------------------------
+
+function setInteractive(map){
+  var provider = map.getBaseLayer().getProvider();
+  var style = provider.getStyle();
+  var changeListener = (evt) => {
+    if (style.getState() === H.map.Style.State.READY) {
+      style.removeEventListener('change', changeListener);
+      style.setInteractive(['places', 'places.populated-places'], true);
+      provider.addEventListener('tap', onTap);
+    }
+  };
+  style.addEventListener('change', changeListener);
+}
+var platform = new H.service.Platform({
+  apikey: apikeyFromHere
+});
+var defaultLayers = platform.createDefaultLayers();
+var map = new H.Map(document.getElementById('map'),
+  defaultLayers.vector.normal.map, {
+  center: {lat: latitude, lng: longitude},
+  zoom: 11,
+  pixelRatio: window.devicePixelRatio || 1
+});
+window.addEventListener('resize', () => map.getViewPort().resize());
+var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+var ui = H.ui.UI.createDefault(map, defaultLayers);
+var bubble;
+function onTap(evt) {
+  let position = map.screenToGeo(
+    evt.currentPointer.viewportX,
+    evt.currentPointer.viewportY
+  );
+  let props = evt.target.getData().properties;
+  let content = '<div style="width:250px">It is a ' + props.kind + ' ' + (props.kind_detail || '') +
+    (props.population ? '<br /> population: ' + props.population : '') +
+    '<br /> local name is ' + props['name'] +
+    (props['name:ar'] ? '<br /> name in Arabic is '+ props['name:ar'] : '') + '</div>';
+  if (!bubble) {
+    bubble = new H.ui.InfoBubble(position, {
+      content: content
+    });
+    ui.addBubble(bubble);
+  } else {
+    bubble.setPosition(position);
+    bubble.setContent(content);
+    bubble.open();
+  }
+}
+setInteractive(map);
+</script>

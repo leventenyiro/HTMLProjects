@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>div_img</title>
+	<style type="text/css">
+		html, body{
+			background-image: linear-gradient(270deg, #334d50, #cbcaa5);
+		}
+		#keret{
+			position: absolute;
+			margin: auto;
+			top: 0; bottom: 0; right: 0; left: 0;
+			width: 600px;
+			height: 300px;
+			border-radius: 25px;
+			box-shadow: 0 20px 40px 0 #0f0f0f;
+			overflow: hidden;
+		}
+		#keret img{
+			display: block;
+		}
+		#kep{
+			width: 600px;
+			position: center;
+			border-radius: 25px;
+			transition: 1s;
+			filter: brightness(60%);
+		}
+		#kep:hover{
+			transform: scale(1.1);
+			filter: brightness(100%);
+		}
+	</style>
+</head>
+<body>
+	<div id="keret">
+		<img id="kep" src="https://s4827.pcdn.co/wp-content/uploads/2018/06/macOS_mojave_wallpaper_day.jpg">
+	</div>
+</body>
+</html>
